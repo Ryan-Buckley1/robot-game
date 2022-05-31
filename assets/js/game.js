@@ -66,9 +66,7 @@ var fight = function(enemy) {
 
 // fight each enemy-robot by looping over them and fighting them one at a time
 var startGame = function () {
-    playerInfo.health = 100;
-    playerInfo.attack = 10;
-    playerInfo.money = 10;
+    playerInfo.reset();
     for (var i = 0; i < enemyInfo.length; i++) {
         // if player is still alive, keep fighting
         if (playerInfo.health > 0) {
@@ -126,25 +124,11 @@ var shop = function() {
     switch (shopOptionPrompt) {
         case "REFILL":
         case "refill":
-            if (playerInfo.money >= 7) {
-            window.alert("Refilling player's health by 20 for 7 dollars.");
-            playerInfo.health = playerInfo.health + 20;
-            playerInfo.money = playerInfo.money - 7;
-            }
-            else {
-                window.alert("You don't have enough money!");
-            }
+            playerInfo.refillHealth();
             break;
     case "UPGRADE":
     case "upgrade":
-        if (playerInfo.money >= 7) {
-        window.alert("Upgrading player's attack by 6 for 7 dollars.");
-        playerInfo.attack = playerInfo.attack + 6;
-        playerInfo.money = playerInfo.money - 7;
-        }
-        else {
-            window.alert("You don't have enough money!");
-        }
+        playerInfo.upgradeAttack();
         break;
     case "LEAVE":
     case "leave":
@@ -163,7 +147,20 @@ var playerInfo = {
   name: window.prompt("What is your robot's name?"),
   health: 100,
   attack: 10,
-  money: 10
+  money: 10,
+  reset: function() {
+    this.health = 100;
+    this.money = 10;
+    this.attack = 10;
+  },
+  refillHealth: function() {
+    this.health +=20;
+    this.money -= 7;
+  },
+  upgradeAttack: function() {
+    this.attack += 6;
+    this.money -= 7;
+  }
 };
 
 
@@ -179,6 +176,6 @@ var enemyInfo = [
   {
     name: "Robo Trumble",
     attack: randomNumber(10, 14)
-  };
+  }
 ];
 startGame();
