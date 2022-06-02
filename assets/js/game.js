@@ -26,7 +26,12 @@ var fightOrSkip = function () {
 
 // fight function (now with parameter for enemy's name)
 var fight = function (enemy) {
+  var isPlayerTurn = true;
+  if (Math.random() > .5) {
+    isPlayerTurn = false;
+  }
   while (playerInfo.health > 0 && enemy.health > 0) {
+    if (isPlayerTurn) {
     if (fightOrSkip()) {
       break;
     }
@@ -51,6 +56,7 @@ var fight = function (enemy) {
     } else {
       window.alert(enemy.name + ' still has ' + enemy.health + ' health left.');
     }
+  } else {
 
     // remove players's health by subtracting the amount set in the enemyAttack variable
     var damage = randomNumber(enemy.attack - 3, enemy.attack)
@@ -68,6 +74,8 @@ var fight = function (enemy) {
       window.alert(playerInfo.name + ' still has ' + playerInfo.health + ' health left.');
     }
   } // end of while loop
+  isPlayerTurn = !isPlayerTurn;
+}
 }; // end of fight function
 
 // fight each enemy-robot by looping over them and fighting them one at a time
